@@ -6,38 +6,34 @@ env.overwriteOutput = True
 
 
 jurisdictional_limits = arcpy.GetParameterAsText(0)
-if jurisdictional_limits == '#' or not jurisdictional_limits:
-    jurisdictional_limits = "chapel-hill-jurisdictional-limits" 
 
 signal_locations = arcpy.GetParameterAsText(1)
-if signal_locations == '#' or not signal_locations:
-    signal_locations = "traffic-signal-location-list" 
 
 bicycle_crash_data = arcpy.GetParameterAsText(2)
-if bicycle_crash_data == '#' or not bicycle_crash_data:
-    bicycle_crash_data = "bicycle-crash-data-chapel-hill-region" 
 
 pedestrian_crash_data = arcpy.GetParameterAsText(3)
-if pedestrian_crash_data == '#' or not pedestrian_crash_data:
-    pedestrian_crash_data = "pedestrian-crashes-chapel-hill-region"
 
+j_signals = "j_signals.shp"
+j_bicycle = "j_bicycle_crashes.shp"
+j_pedestrians = "j_ped_crashes.shp"
 
-j_signals = "j_signals"
-j_bicycle = "j_bicycle_crashes"
-j_pedestrians = "j_ped_crashes"
+arcpy.Clip_analysis(signal_locations, jurisdictional_limits, j_signals, "")
+arcpy.Clip_analysis(bicycle_crash_data, jurisdictional_limits, j_bicycle, "")
+arcpy.Clip_analysis(pedestrian_crash_data, jurisdictional_limits, j_pedestrians, "")
 
-arcpy.Intersect_analysis(jurisdictional_limits, signal_locations, j_signals)
-arcpy.Intersect_analysis(jurisdictional_limits, bicycle_crash_data, j_bicycle)
-arcpy.Intersect_analysis(jurisdictional_limits, pedestrian_crash_data, j_pedestrians)
-
-signals_buffer = "signals_buff"
+signals_buffer = "signals_buff.shp"
 
 arcpy.Buffer_analysis(j_signals, signals_buffer, "400 Feet", "FULL", "ROUND", "NONE")
 
-bicycle_count = "bicycle_count"
+bicycle_count = "bicycle_count.shp"
 arcpy.SpatialJoin_analysis(signals_buffer, j_bicycle, bicycle_count)
-bicycle_and_ped = "count_bikes_ped_crashes"
-arcpy.SpatialJoin_analysis(bicycle_count, j_pedestrian, bicycle_and_ped)
+
+bicycle_and_ped = "count_bikes_ped_crashes.shp"
+arcpy.SpatialJoin_analysis(bicycle_count, j_pedestrians, bicycle_and_ped)
+
+arcpy.AddField_management(bicycle_and_ped, "Accidents", "SHORT", 5, "", "", "accidents", "NULLABLE")
+
+arcpy.CalculateField_management(bicycle_and_ped, "Accidents", "[Join_Count] + [Join_Cou_1]")
 
 
 
