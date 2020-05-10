@@ -23,7 +23,7 @@ arcpy.Clip_analysis(pedestrian_crash_data, jurisdictional_limits, j_pedestrians,
 
 signals_buffer = "signals_buff.shp"
 
-arcpy.Buffer_analysis(j_signals, signals_buffer, "400 Feet", "FULL", "ROUND", "NONE")
+arcpy.Buffer_analysis(j_signals, signals_buffer, arcpy.GetParameterAsText(5), "FULL", "ROUND", "NONE")
 
 bicycle_count = "bicycle_count.shp"
 arcpy.SpatialJoin_analysis(signals_buffer, j_bicycle, bicycle_count)
