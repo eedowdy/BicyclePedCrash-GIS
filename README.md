@@ -8,5 +8,6 @@ Instructions/Notes:
 Sample data comes from https://www.chapelhillopendata.org/
 
 Sample Map:
+
 ![SampleMap](https://user-images.githubusercontent.com/54999769/81514831-bb49af80-92f6-11ea-95ff-a07c80862a9f.jpg)
 
