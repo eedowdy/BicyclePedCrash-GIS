@@ -7,6 +7,8 @@ Instructions/Notes:
 - tool.py is the script found within this tool
 Sample data comes from https://www.chapelhillopendata.org/
 
+More info can be found here: [380 Final Project Writeup.pdf](https://github.com/eedowdy/BicyclePedCrash-GIS/files/4607061/380.Final.Project.Writeup.pdf)
+
 Sample Map:
 
 ![SampleMap](https://user-images.githubusercontent.com/54999769/81514831-bb49af80-92f6-11ea-95ff-a07c80862a9f.jpg)
